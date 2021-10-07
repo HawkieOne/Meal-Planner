@@ -26,13 +26,14 @@ class DayWidget extends StatelessWidget {
                   dateInfo(context, dayTitle),
                   Padding(
                       padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20)),
-
+                  mealCell(context, "Breakfast", Theme.of(context).primaryColor),
+                  Divider(),
+                  mealCell(context, "Lunch", Theme.of(context).primaryColor),
+                  Divider(),
+                  mealCell(context, "Dinner", Theme.of(context).primaryColor),
+                  Divider(),
+                  mealCell(context, "Dinner", Theme.of(context).primaryColor),
                 ],
-                mealCell(context, "Breakfast", Theme.of(context).primaryColor),
-                Divider(),
-                mealCell(context, "Lunch", Theme.of(context).primaryColor),
-                Divider(),
-                mealCell(context, "Dinner", Theme.of(context).primaryColor),
               ),
             )
         ),
