@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_planner/widgets/Popup.dart';
 
-Widget mealCell(dynamic context, String meal, Color backgroundColor) {
+Widget mealCell(dynamic context, String mealTime, Color backgroundColor) {
   return Expanded(
       child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor
-        ),
         child: Column(
           children: [
             Text(
-              meal,
+              mealTime,
               style: Theme.of(context).textTheme.headline3,
             ),
             Row(
@@ -29,7 +27,8 @@ Widget mealCell(dynamic context, String meal, Color backgroundColor) {
                     ),
                     ElevatedButton(
                       onPressed: () => {
-
+                        Popup(context: context).show(),
+                        print("TEST"),
                       },
                       child: Text(
                           "Change meal"
