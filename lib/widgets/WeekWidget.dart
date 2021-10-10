@@ -29,20 +29,17 @@ class WeekWidget extends StatelessWidget {
     List<String> getWeek() {
       DateTime now = DateTime.now();
       List<String> dates = <String>[];
-      for (var i = 0; i < 6; i++) {
-        DateTime nextDay = now.subtract(const Duration(days: 1));
-        String nextDayText = DateFormat('EEEE dd MMMM', 'en_US').format(nextDay);
-        dates.add(nextDayText);
-        now = nextDay;
+      for (var i = 6; i > 0; i--) {
+        DateTime prevDay = now.subtract(Duration(days: i));
+        String prevDayText = DateFormat('EEEE dd MMMM', 'en_US').format(prevDay);
+        dates.add(prevDayText);
       }
-      now = DateTime.now();
       String todayText = DateFormat('EEEE dd MMMM', 'en_US').format(now);
       dates.add(todayText);
       for (var i = 0; i < 6; i++) {
-        DateTime nextDay = now.add(const Duration(days: 1));
+        DateTime nextDay = now.add(Duration(days: i));
         String nextDayText = DateFormat('EEEE dd MMMM', 'en_US').format(nextDay);
         dates.add(nextDayText);
-        now = nextDay;
       }
       return dates;
     }
