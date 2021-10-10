@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mealeon',
       theme: CustomTheme.nordTheme,
-      home: MyHomePage(title: 'Meleon'),
+      home: MyHomePage(title: 'Mealeon'),
     );
   }
 }
