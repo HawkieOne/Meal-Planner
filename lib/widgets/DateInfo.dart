@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-Widget dateInfo(dynamic context, String dayTitle) {
+Widget dateInfo(dynamic context, String dayTitle, VoidCallback prevFunction, VoidCallback nextFunction) {
   return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
@@ -11,17 +11,27 @@ Widget dateInfo(dynamic context, String dayTitle) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Icon(
-            Icons.arrow_back_ios,
-
+          Material(
+            borderRadius: BorderRadius.circular(25),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              highlightColor: Colors.grey,
+              splashRadius: 24,
+              onPressed: prevFunction,
+            ),
           ),
           Text(
-            // today.toString(),
             dayTitle,
             style: Theme.of(context).textTheme.headline3,
           ),
-          Icon(
-            Icons.arrow_forward_ios,
+          Material(
+            borderRadius: BorderRadius.circular(25),
+            child: IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              highlightColor: Colors.grey,
+              splashRadius: 24,
+              onPressed: nextFunction,
+            ),
           ),
         ],
       )
