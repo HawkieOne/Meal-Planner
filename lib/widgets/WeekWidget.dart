@@ -15,25 +15,25 @@ class WeekWidget extends StatelessWidget {
     void onNextPressed() {
       controller.animateToPage(
           controller.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeIn);
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease);
     }
 
     void onPrevPressed() {
       controller.animateToPage(
-          controller.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeIn);
+          controller.page!.toInt() - 1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease);
     }
 
     List<String> getWeek() {
       DateTime now = DateTime.now();
       List<String> dates = <String>[];
       for (var i = 0; i < 6; i++) {
-        DateTime nextDay = now.subtract(const Duration(days: 1));
-        String nextDayText = DateFormat('EEEE dd MMMM', 'en_US').format(nextDay);
-        dates.add(nextDayText);
-        now = nextDay;
+        DateTime prevDay = now.subtract(const Duration(days: 1));
+        String prevDayText = DateFormat('EEEE dd MMMM', 'en_US').format(prevDay);
+        dates.add(prevDayText);
+        now = prevDay;
       }
       now = DateTime.now();
       String todayText = DateFormat('EEEE dd MMMM', 'en_US').format(now);
@@ -52,7 +52,8 @@ class WeekWidget extends StatelessWidget {
       List<Widget> widgets = <Widget>[];
       for (int i = 0; i < 13; i++) {
         Widget day = Center(
-          child: DayWidget(dayTitle: dates[i]),
+          child: DayWidget(dayTitle: dates[i],
+            prevFunction: onPrevPressed, nextFunction: onNextPressed,),
         );
         widgets.add(day);
       }
