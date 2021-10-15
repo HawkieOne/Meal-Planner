@@ -53,6 +53,7 @@ class Popup {
                             ? Alignment.topRight
                             : Alignment.topLeft,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(25),
                           child: Icon(
                             Icons.close,
                             color: Theme.of(context).errorColor,
@@ -78,15 +79,15 @@ class Popup {
               child: Column(
                 children: [
                   TextCaption(context, "Meal"),
-                  TextField(controller: mealController),
+                  TextField(controller: mealController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 10),
                   TextCaption(context, "Recipes"),
-                  TextField(controller: recipeController),
+                  TextField(controller: recipeController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 10,),
                   TextCaption(context, "Notes"),
-                  TextField(controller: noteController),
+                  TextField(controller: noteController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 20,),
                   FloatingActionButton.extended(
