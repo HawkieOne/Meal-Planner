@@ -1,23 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_planner/widgets/PopupWidgets.dart';
+import 'package:meal_planner/models/MealModel.dart';
 
-class Popup   {
+class Popup {
   final BuildContext context;
+  MealModel meal;
   final bool crossButton;
   // ignore: non_constant_identifier_names
   final bool cross_button_right;
   final double message_to_button_gap;
 
+  TextEditingController mealController = TextEditingController();
+  TextEditingController recipeController = TextEditingController();
+  TextEditingController noteController = TextEditingController();
+
   Popup({
     Key? key,
     required this.context,
+    required this.meal,
     this.crossButton = true,
     this.cross_button_right = true,
     this.message_to_button_gap = 18.0,
   });
 
-  @override
   Future show() => showDialog(
       context: this.context,
       builder: (BuildContext context) {
@@ -47,6 +53,7 @@ class Popup   {
                             ? Alignment.topRight
                             : Alignment.topLeft,
                         child: InkWell(
+                          borderRadius: BorderRadius.circular(25),
                           child: Icon(
                             Icons.close,
                             color: Theme.of(context).errorColor,
@@ -68,28 +75,35 @@ class Popup   {
                 ),
               ],
             ),
-            content: Column(
-              children: [
-                TextCaption(context, "Meal"),
-                TextInput(context),
-                SizedBox(height: 10,),
-                TextCaption(context, "Recipes"),
-                TextInput(context),
-                SizedBox(height: 10,),
-                TextCaption(context, "Notes"),
-                TextInput(context),
-                SizedBox(height: 20,),
-                FloatingActionButton.extended(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  backgroundColor: Theme.of(context).highlightColor,
-                  label: Text(
-                    "Save",
-                    style: Theme.of(context).textTheme.headline4,
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  TextCaption(context, "Meal"),
+                  TextField(controller: mealController, style: TextStyle(color: Colors.white)),
+                  // TextInput(context),
+                  SizedBox(height: 10),
+                  TextCaption(context, "Recipes"),
+                  TextField(controller: recipeController, style: TextStyle(color: Colors.white)),
+                  // TextInput(context),
+                  SizedBox(height: 10,),
+                  TextCaption(context, "Notes"),
+                  TextField(controller: noteController, style: TextStyle(color: Colors.white)),
+                  // TextInput(context),
+                  SizedBox(height: 20,),
+                  FloatingActionButton.extended(
+                    onPressed: () async {
+                      meal.setMeal(mealController.text);
+                      meal.setNote(noteController.text);
+                      Navigator.pop(context);
+                    },
+                    backgroundColor: Theme.of(context).highlightColor,
+                    label: Text(
+                      "Save",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

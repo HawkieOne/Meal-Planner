@@ -15,12 +15,12 @@ class MealModel extends ChangeNotifier {
   }
 
   void setMeal(String meal) {
-    meal = meal;
+    this.meal = meal;
     notifyListeners();
   }
 
   void setNote(String note) {
-    note = note;
+    this.note = note;
     notifyListeners();
   }
 
