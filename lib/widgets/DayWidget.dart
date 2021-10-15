@@ -25,7 +25,6 @@ class DayWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  dateInfo(context, dayTitle, prevFunction, nextFunction),
                   Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                   ),
@@ -33,6 +32,8 @@ class DayWidget extends StatelessWidget {
                   Divider(),
                   mealCell(context, "Lunch", Theme.of(context).primaryColor, Icons.lunch_dining),
                   Divider(),
+                  mealCell(context, "Dinner", Theme.of(context).primaryColor),
+                  dateInfo(context, dayTitle, prevFunction, nextFunction),
                   mealCell(context, "Dinner", Theme.of(context).primaryColor, Icons.dinner_dining),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_planner/themes/CustomTheme.dart';
+import 'package:meal_planner/widgets/CustomAppBar.dart';
 import 'package:meal_planner/widgets/WeekWidget.dart';
 
 void main() {
@@ -32,9 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-      //   title: Text(widget.title),
-      // ),
+      appBar: CustomAppBar(title: "Mealeo"),
       body: WeekWidget()
     );
   }
