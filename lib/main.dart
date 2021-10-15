@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:meal_planner/Settings.dart';
 import 'package:meal_planner/themes/CustomTheme.dart';
 import 'package:meal_planner/widgets/CustomAppBar.dart';
 import 'package:meal_planner/widgets/WeekWidget.dart';
@@ -13,27 +15,43 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Mealeon',
       theme: CustomTheme.nordTheme,
-      home: MyHomePage(title: 'Mealeon'),
+      initialRoute: '/',
+      routes: {
+        '/home': (context) => HomePage(title: "Mealeon"),
+        '/settings': (context) => const Settings(),
+        // '/statistics':
+      },
+      home: HomePage(title: 'Mealeon'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
+
+  void initState()
+  {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(title: "Mealeo"),
+      appBar: CustomAppBar(title: "Mealeon"),
       body: WeekWidget()
     );
   }
