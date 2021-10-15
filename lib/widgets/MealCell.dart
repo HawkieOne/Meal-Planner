@@ -4,13 +4,14 @@ import 'package:meal_planner/models/MealModel.dart';
 import 'package:meal_planner/widgets/Popup.dart';
 import 'package:provider/provider.dart';
 
-Widget mealCell(dynamic context, String mealTime, Color backgroundColor) {
+Widget mealCell(dynamic context, String mealTime, Color backgroundColor, IconData icon) {
   return
     ChangeNotifierProvider(
       create: (context) => MealModel(),
       child: Expanded(
           child: Container(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     mealTime,
@@ -32,6 +33,7 @@ Widget mealCell(dynamic context, String mealTime, Color backgroundColor) {
                                 "Chosen meal: ${meal.meal}",
 
                               ),
+                              SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
                                   Popup(context: context, meal: meal).show();
@@ -42,27 +44,10 @@ Widget mealCell(dynamic context, String mealTime, Color backgroundColor) {
                               ),
                             ],
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () => {
-
-                                },
-                                child: Text(
-                                    "Add recipes"
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () => {
-
-                                },
-                                child: Text(
-                                    "Add note"
-                                ),
-                              ),
-                            ],
-                          )
+                         Icon(
+                           icon,
+                           size: 60,
+                         ),
                         ],
                       );
                     },
