@@ -45,6 +45,7 @@ class CustomTheme with ChangeNotifier {
           headline2: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold,  color: Color(0xffD8DEE9)),
           headline3: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold,  color: Color(0xffD8DEE9)),
           headline4: TextStyle(fontSize: 18.0, fontWeight: FontWeight.normal,  color: Color(0xff2E3440)),
+          headline5: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,  color: Color(0xffA3BE8C)),
           bodyText1: TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal,  color: Color(0xffD8DEE9)),
           bodyText2: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold,  color: Color(0xffD8DEE9)),
         ),
