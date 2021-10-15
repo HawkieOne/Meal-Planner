@@ -8,7 +8,9 @@ import 'MealCell.dart';
 /// This is the stateless widget that the main application instantiates.
 class DayWidget extends StatelessWidget {
   final String dayTitle;
-  const DayWidget({Key? key, this.dayTitle: "Undefined"}) : super(key: key);
+  final VoidCallback nextFunction;
+  final VoidCallback prevFunction;
+  const DayWidget({Key? key, this.dayTitle: "Undefined", required this.prevFunction, required this.nextFunction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class DayWidget extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  dateInfo(context, dayTitle),
+                  dateInfo(context, dayTitle, prevFunction, nextFunction),
                   Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                   ),

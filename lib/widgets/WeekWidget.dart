@@ -10,34 +10,28 @@ class WeekWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController(initialPage: 6);
+    final PageController controller = PageController(initialPage: 7);
+    final int rangeOfDays = 15;
 
     void onNextPressed() {
       controller.animateToPage(
           controller.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeIn);
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease);
     }
 
     void onPrevPressed() {
       controller.animateToPage(
-          controller.page!.toInt() + 1,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeIn);
+          controller.page!.toInt() - 1,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease);
     }
 
     List<String> getWeek() {
-      DateTime now = DateTime.now();
+      DateTime now = DateTime.now().subtract(const Duration(days: 8));
       List<String> dates = <String>[];
-      for (var i = 6; i > 0; i--) {
-        DateTime prevDay = now.subtract(Duration(days: i));
-        String prevDayText = DateFormat('EEEE dd MMMM', 'en_US').format(prevDay);
-        dates.add(prevDayText);
-      }
-      String todayText = DateFormat('EEEE dd MMMM', 'en_US').format(now);
-      dates.add(todayText);
-      for (var i = 0; i < 6; i++) {
-        DateTime nextDay = now.add(Duration(days: i));
+      for (var i = 0; i < rangeOfDays; i++) {
+        DateTime nextDay = now.add(const Duration(days: 1));
         String nextDayText = DateFormat('EEEE dd MMMM', 'en_US').format(nextDay);
         dates.add(nextDayText);
       }
@@ -47,9 +41,10 @@ class WeekWidget extends StatelessWidget {
     List<Widget> getAmountOfDays() {
       List<String> dates = getWeek();
       List<Widget> widgets = <Widget>[];
-      for (int i = 0; i < 13; i++) {
+      for (int i = 0; i < rangeOfDays; i++) {
         Widget day = Center(
-          child: DayWidget(dayTitle: dates[i]),
+          child: DayWidget(dayTitle: dates[i],
+            prevFunction: onPrevPressed, nextFunction: onNextPressed,),
         );
         widgets.add(day);
       }
