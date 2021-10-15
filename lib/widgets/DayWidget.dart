@@ -29,11 +29,11 @@ class DayWidget extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                   ),
-                  mealCell(context, "Breakfast", Theme.of(context).primaryColor),
+                  mealCell(context, "Breakfast", Theme.of(context).primaryColor, Icons.coffee),
                   Divider(),
-                  mealCell(context, "Lunch", Theme.of(context).primaryColor),
+                  mealCell(context, "Lunch", Theme.of(context).primaryColor, Icons.lunch_dining),
                   Divider(),
-                  mealCell(context, "Dinner", Theme.of(context).primaryColor),
+                  mealCell(context, "Dinner", Theme.of(context).primaryColor, Icons.dinner_dining),
                 ],
               ),
             )
