@@ -33,9 +33,8 @@ Widget mealCell(dynamic context, String mealTime, Color backgroundColor) {
 
                               ),
                               ElevatedButton(
-                                onPressed: () => {
-                                  Popup(context: context).show(),
-                                  print("TEST"),
+                                onPressed: () {
+                                  Popup(context: context, meal: meal).show();
                                 },
                                 child: Text(
                                     "Change meal"
