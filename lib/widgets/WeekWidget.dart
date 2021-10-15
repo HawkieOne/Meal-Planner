@@ -34,6 +34,7 @@ class WeekWidget extends StatelessWidget {
         DateTime nextDay = now.add(const Duration(days: 1));
         String nextDayText = DateFormat('EEEE dd MMMM', 'en_US').format(nextDay);
         dates.add(nextDayText);
+        now = nextDay;
       }
       return dates;
     }
