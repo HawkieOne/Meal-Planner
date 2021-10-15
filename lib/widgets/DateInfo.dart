@@ -5,7 +5,7 @@ Widget dateInfo(dynamic context, String dayTitle, VoidCallback prevFunction, Voi
   return Container(
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight,
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(10), bottomLeft: Radius.circular(10))
+          borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
       ),
       padding: EdgeInsets.all(20),
       child: Row(
