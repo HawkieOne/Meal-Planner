@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 
@@ -21,19 +22,23 @@ class _CustomAppBarState extends State<CustomAppBar>{
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,
+      systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Theme.of(context).primaryColor),
       title: Text(
           widget.title,
           style: Theme.of(context).textTheme.headline5,
       ),
       centerTitle: true,
       actions: <Widget>[
-       IconButton(
-         icon: Icon(
-           Icons.settings,
-         ),
-         onPressed: () {
-
-         },
+       Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: IconButton(
+          icon: Icon(
+            Icons.settings,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, '/settings');
+          },
+        ),
        )
       ],
     );
