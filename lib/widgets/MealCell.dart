@@ -36,7 +36,7 @@ Widget mealCell(dynamic context, String mealTime, Color backgroundColor, IconDat
                               SizedBox(height: 20),
                               ElevatedButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/mealInfo');
+                                  Navigator.pushNamed(context, '/mealInfo', arguments: {'title': mealTime});
                                   // Popup(context: context, meal: meal).show();
                                 },
                                 child: Text(
