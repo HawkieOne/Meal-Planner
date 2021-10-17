@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:meal_planner/Settings.dart';
+// import 'package:meal_planner/Settings.dart';
 import 'package:meal_planner/themes/CustomTheme.dart';
 import 'package:meal_planner/widgets/CustomAppBar.dart';
+import 'package:meal_planner/widgets/MealInfo.dart';
 import 'package:meal_planner/widgets/WeekWidget.dart';
 
 void main() {
@@ -18,7 +19,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/home': (context) => HomePage(title: "Mealeon"),
-        '/settings': (context) => const Settings(),
+        '/mealInfo': (context) => MealInfo(),
+        // '/settings': (context) => const Settings(),
         // '/statistics':
       },
       home: HomePage(title: 'Mealeon'),

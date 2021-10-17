@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meal_planner/widgets/DateInfo.dart';
 
+import 'DateInfo.dart';
 import 'MealCell.dart';
 
 /// This is the stateless widget that the main application instantiates.
