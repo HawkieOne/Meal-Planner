@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 
 class MealInfo extends StatefulWidget {
   final String title;
+  final IconData icon;
 
-  MealInfo({Key? key, this.title: "Undefined"}) : super(key: key);
+  MealInfo({Key? key, this.title: "Undefined", this.icon: Icons.help_outline}) : super(key: key);
 
   @override
   _MealInfoState createState() => _MealInfoState();
@@ -17,12 +18,29 @@ Widget ingredientField() {
       Expanded(flex: 7, child: TextField(
         decoration: InputDecoration(
           hintText: 'Enter ingredient',
+          contentPadding: EdgeInsets.all(5.0),
+          isDense: true,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
         ),
       )),
       Padding(padding: const EdgeInsets.all(20)),
       Expanded(flex: 3, child: TextField(
         decoration: InputDecoration(
-            hintText: '1'),
+          hintText: '1',
+          contentPadding: EdgeInsets.all(5.0),
+          isDense: true,
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.white),
+          ),
+        ),
       )),
     ],
   );
@@ -36,6 +54,7 @@ class _MealInfoState extends State<MealInfo> {
   Widget build(BuildContext context) {
     final Map arguments = ModalRoute.of(context)!.settings.arguments as Map;
     String title = arguments["title"];
+    IconData icon = arguments["icon"];
 
     void addIngredientWidget() {
       setState(() {
@@ -62,34 +81,49 @@ class _MealInfoState extends State<MealInfo> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Meal",
-                      style: Theme.of(context).textTheme.headline3,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Meal",
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
+                    Padding(padding: EdgeInsets.all(5)),
                     Container(
                       width: MediaQuery.of(context).size.width / 2,
                       child: TextField(
                           decoration: InputDecoration(
-                            hintText: "Enter meal here"
+                            hintText: "Enter meal here",
+                            contentPadding: EdgeInsets.all(5.0),
+                            isDense: true,
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
                           )
                       ),
                     ),
                   ],
                 ),
                 Icon(
-                  Icons.dinner_dining,
+                  icon,
                   size: 100,
                 )
               ],
             ),
+            Padding(padding: const EdgeInsets.all(10)),
             Container (
-                width: MediaQuery.of(context).size.width * 0.8,
+                width: MediaQuery.of(context).size.width * 0.85,
                 child: Row(
                   children: [
-                    Expanded(flex: 7,child: Text("Ingredients")),
-                    Expanded(flex: 3,child: Text("Amount")),
+                    Expanded(flex: 7,child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Ingredients"))
+                    ),
+                    Expanded(flex: 3,child: Center(child: Text("Amount"))),
                   ],
                 ),
             ),
@@ -108,13 +142,18 @@ class _MealInfoState extends State<MealInfo> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                shape: BeveledRectangleBorder(),
-                fixedSize: Size.fromWidth(MediaQuery.of(context).size.width * 0.9)
+                // shape: BeveledRectangleBorder(),
+                fixedSize: Size.fromWidth(MediaQuery.of(context).size.width / 3)
               ),
               child: const Icon(Icons.add),
               onPressed: () { addIngredientWidget(); },
             ),
             Padding(padding: const EdgeInsets.all(10)),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text("Notes"),
+            ),
+            Padding(padding: const EdgeInsets.all(5)),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextField(
@@ -130,7 +169,6 @@ class _MealInfoState extends State<MealInfo> {
             Padding(padding: const EdgeInsets.all(5)),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                shape: BeveledRectangleBorder(),
                 primary: Colors.green,
                 fixedSize: Size.fromWidth(MediaQuery.of(context).size.width / 2),
               ),
