@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meal_planner/widgets/DateInfo.dart';
 
+import 'DateInfo.dart';
 import 'MealCell.dart';
 
 /// This is the stateless widget that the main application instantiates.
@@ -33,6 +33,7 @@ class DayWidget extends StatelessWidget {
                   mealCell(context, "Lunch", Theme.of(context).primaryColor, Icons.lunch_dining),
                   Divider(),
                   mealCell(context, "Dinner", Theme.of(context).primaryColor, Icons.dinner_dining),
+                  dateInfo(context, dayTitle, prevFunction, nextFunction),
                 ],
               ),
             )
