@@ -2,6 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'package:http/http.dart' as http;
+import 'package:html/parser.dart' as parser;
+import 'package:html/dom.dart' as dom;
+
+
 class MealInfo extends StatefulWidget {
   final String title;
   final IconData icon;
@@ -49,6 +54,29 @@ Widget ingredientField() {
 class _MealInfoState extends State<MealInfo> {
   List<Widget> _ingredients = <Widget>[ingredientField()];
   String _test = "Testing";
+  String urlImg = "";
+
+  void setUrlImg(String url) {
+    setState(() {
+      print(url);
+      urlImg = url;
+    });
+  }
+
+  Future<void> getImageURL() async {
+    http.Response response = await http.get(Uri.parse('https://www.ica.se/recept/busenkel-broccolisoppa-712859/'));
+    if(response.statusCode == 200) {
+      dom.Document document = parser.parse(response.body);
+      var imgList = document.getElementsByClassName('recipe-header__image');
+      setUrlImg(imgList[0].attributes['src'].toString());
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getImageURL();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +89,9 @@ class _MealInfoState extends State<MealInfo> {
         _ingredients.add(ingredientField());
       });
     }
-    
+
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -108,10 +138,56 @@ class _MealInfoState extends State<MealInfo> {
                     ),
                   ],
                 ),
-                Icon(
-                  icon,
-                  size: 100,
-                )
+                Container(
+                  width: 100,
+                  height: 100,
+                  child: FutureBuilder(
+                    future: http.get(Uri.parse('https://www.ica.se/recept/busenkel-broccolisoppa-712859/')),
+                    builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData) {
+                          dom.Document document = parser.parse(snapshot.data.body);
+                          var imgList = document.getElementsByClassName('recipe-header__image');
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Image.network(imgList[0].attributes['src'].toString(),
+                                fit: BoxFit.cover
+                            ),
+                          );
+                        }
+                        else{
+                          return Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.red
+                          );
+                        }
+                      } else{
+                        return Container(
+                          width: 50,
+                          height: 50,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.blue,
+                              )
+                          ),
+                        );
+                      }
+                    },
+
+                  ),
+
+                  // Image.network(urlImg,
+                  //         fit: BoxFit.cover
+                  // ),
+
+                ),
+                // Icon(
+                //   icon,
+                //   size: 100,
+                // )
               ],
             ),
             Padding(padding: const EdgeInsets.all(10)),
@@ -173,7 +249,9 @@ class _MealInfoState extends State<MealInfo> {
                 fixedSize: Size.fromWidth(MediaQuery.of(context).size.width / 2),
               ),
               child: const Text("Save"),
-              onPressed: () { Navigator.pop(context); },
+              onPressed: () {
+                Navigator.pop(context);
+                },
             ),
           ],
         ),
