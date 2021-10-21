@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:meal_planner/widgets/PopupWidgets.dart';
+import 'package:meal_planner/widgets/Widgets.dart';
 import 'package:meal_planner/models/MealModel.dart';
 
 class Popup {
@@ -78,15 +78,15 @@ class Popup {
             content: SingleChildScrollView(
               child: Column(
                 children: [
-                  TextCaption(context, "Meal"),
+                  TextCaptionLeft(context, "Meal", Theme.of(context).textTheme.bodyText2),
                   TextField(controller: mealController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 10),
-                  TextCaption(context, "Recipes"),
+                  TextCaptionLeft(context, "Recipes", Theme.of(context).textTheme.bodyText2),
                   TextField(controller: recipeController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 10,),
-                  TextCaption(context, "Notes"),
+                  TextCaptionLeft(context, "Notes", Theme.of(context).textTheme.bodyText2),
                   TextField(controller: noteController, style: TextStyle(color: Colors.white)),
                   // TextInput(context),
                   SizedBox(height: 20,),
