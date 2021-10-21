@@ -76,10 +76,10 @@ class _MealInfoState extends State<MealInfo> {
 
               for (var i = 0; i < ingrList!.length - 1; i++) {
                 var qty = ingrList[i].getElementsByTagName('span')[0].innerHtml.replaceAll(RegExp('\\s'), "").replaceAll(RegExp("(?<=\\d)(?=\\D)")," ").replaceAll(RegExp("(?<=\\D)(?=\\d)")," ");
-                var ingredient = ingrList[i].getElementsByTagName('span')[1].innerHtml.replaceAll(RegExp(r'\n'), "").replaceAll(RegExp(r'  '), '');
+                var ingredient = toBeginningOfSentenceCase(ingrList[i].getElementsByTagName('span')[1].innerHtml.replaceAll(RegExp(r'\n'), "").replaceAll(RegExp(r'  '), ''));
                 qtis.add(qty);
                 ingredients.add(ingredient);
-                addIngredientWidget(ingredient, qty);
+                addIngredientWidget(ingredient.toString(), qty);
               }
               print(qtis);
               print(ingredients);
