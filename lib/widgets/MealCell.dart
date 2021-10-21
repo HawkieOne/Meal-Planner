@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_planner/models/MealModel.dart';
-import 'package:meal_planner/widgets/Popup.dart';
 import 'package:provider/provider.dart';
 
 Widget mealCell(dynamic context, String mealTime, Color backgroundColor, IconData icon) {
@@ -37,8 +36,7 @@ Widget mealCell(dynamic context, String mealTime, Color backgroundColor, IconDat
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/mealInfo',
-                                      arguments: {'title': mealTime, 'icon': icon});
-                                  // Popup(context: context, meal: meal).show();
+                                      arguments: {'title': mealTime});
                                 },
                                 child: Text(
                                     "Change meal"
