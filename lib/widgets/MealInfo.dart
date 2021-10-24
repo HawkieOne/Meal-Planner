@@ -20,9 +20,9 @@ class MealInfo extends StatefulWidget {
 Widget ingredientField(String ingredient, String qty) {
   return Row(
     children: [
-      Expanded(flex: 3, child: Text(qty)),
+      Expanded(flex: 2, child: Text(qty)),
       Padding(padding: const EdgeInsets.all(10)),
-      Expanded(flex: 7, child: Text(ingredient)),
+      Expanded(flex: 8, child: Text(ingredient)),
     ],
   );
 }
