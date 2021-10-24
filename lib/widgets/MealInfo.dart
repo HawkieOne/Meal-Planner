@@ -88,9 +88,10 @@ class _MealInfoState extends State<MealInfo> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
               dom.Document doc = parser.parse(snapshot.data.body);
-              var img = doc.getElementsByClassName('recipe-header__image')[0];
+              var recipeImage = doc.getElementsByClassName('recipe-header__image')[0];
               var ingredientsList = doc.getElementById('ingredients')?.getElementsByClassName('ingredients-list-group')[0].getElementsByClassName('ingredients-list-group__card');
               var cookingStepsList = doc.getElementsByClassName('cooking-steps-main__text');
+              var recipeTitle = doc.getElementsByClassName('recipe-header__title')[0];
 
               // Must have ingrList.length - 1.
               // if there exist any ingredient without any given amount the program crashes
@@ -107,6 +108,7 @@ class _MealInfoState extends State<MealInfo> {
                 var step = cookingStepsList[i].innerHtml;
                 cookingSteps.add(step.toString());
               }
+              print(recipeTitle.text);
               print(quantites);
               print(ingredients);
               print(cookingSteps);
@@ -118,21 +120,14 @@ class _MealInfoState extends State<MealInfo> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextCaptionLeft(context, "Meal", Theme.of(context).textTheme.headline3),
-                            Padding(padding: EdgeInsets.all(5)),
-                            Container(
-                              width: MediaQuery.of(context).size.width / 2,
-                              child: TextInput(context, "Enter meal here"),
-                            ),
-                          ],
+                        Flexible(
+                          flex: 1,
+                          child: TextCaptionLeft(context, recipeTitle.text, Theme.of(context).textTheme.headline3)
                         ),
                         Container(
-                            width: 100,
-                            height: 100,
-                            child: Image.network(img.attributes['src'].toString(),
+                            width: MediaQuery.of(context).size.width / 4,
+                            height: MediaQuery.of(context).size.width / 4,
+                            child: Image.network(recipeImage.attributes['src'].toString(),
                                 fit: BoxFit.cover
                             )
                         ),
