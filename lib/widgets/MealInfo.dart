@@ -139,16 +139,8 @@ class _MealInfoState extends State<MealInfo> {
                       ],
                     ),
                     Padding(padding: const EdgeInsets.all(10)),
-                    Container (
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: Row(
-                        children: [
-                          Expanded(flex: 2,child: TextCaptionLeft(context, "Amount", DefaultTextStyle.of(context).style)),
-                          Expanded(flex: 8,child: TextCaptionCenter(context, "Ingredients", DefaultTextStyle.of(context).style)
-                          ),
-                        ],
-                      ),
-                    ),
+                    TextCaptionLeft(context, "Ingredients", Theme.of(context).textTheme.headline4),
+                    Padding(padding: const EdgeInsets.all(3)),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: ListView.builder(
@@ -162,7 +154,7 @@ class _MealInfoState extends State<MealInfo> {
                     ),
                     Padding(padding: const EdgeInsets.all(10)),
                     TextCaptionLeft(context, "Cooking steps", Theme.of(context).textTheme.headline4),
-                    Padding(padding: const EdgeInsets.all(5)),
+                    Padding(padding: const EdgeInsets.all(3)),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: ListView.builder(
