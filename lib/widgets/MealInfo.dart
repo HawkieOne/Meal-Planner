@@ -17,24 +17,44 @@ class MealInfo extends StatefulWidget {
   _MealInfoState createState() => _MealInfoState();
 }
 
-Widget ingredientField(String ingr, String qty) {
+Widget ingredientField(String ingredient, String qty) {
   return Row(
     children: [
       Expanded(flex: 3, child: Text(qty)),
-      Padding(padding: const EdgeInsets.all(20)),
-      Expanded(flex: 7, child: Text(ingr)),
+      Padding(padding: const EdgeInsets.all(10)),
+      Expanded(flex: 7, child: Text(ingredient)),
     ],
   );
 }
 
+Widget cookingStepField(BuildContext context, String step, int index) {
+  return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: 0,
+        vertical: 5,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(flex: 1, child: Text((index + 1).toString() + '. ')),
+          // Expanded(flex: 1, child: Text((index + 1).toString() + ". ")),
+          Flexible(flex: 9,child: Text(step)),
+        ],
+      ),
+  );
+}
+
 class _MealInfoState extends State<MealInfo> {
-  List<Widget> _ingredients = <Widget>[];
+  List<Widget> _ingredientsView = <Widget>[];
   TextEditingController _controller = TextEditingController();
 
   String url = "";
+  String urlMatchIca = "https://www.ica.se";
+  String urlMatchCoop = "https://www.coop.se";
   bool hasUrl = false;
-  var qtis = [];
+  var quantites = [];
   var ingredients = [];
+  var cookingSteps = [];
 
   @override
   void initState() {
@@ -48,7 +68,7 @@ class _MealInfoState extends State<MealInfo> {
     IconData icon = Icons.help_outline;
 
     void addIngredientWidget(String ingr, String qty) {
-      _ingredients.add(ingredientField(ingr, qty));
+      _ingredientsView.add(ingredientField(ingr, qty));
     }
 
     return Scaffold(
@@ -67,21 +87,29 @@ class _MealInfoState extends State<MealInfo> {
           future: http.get(Uri.parse(url)),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-              dom.Document document = parser.parse(snapshot.data.body);
-              var img = document.getElementsByClassName('recipe-header__image')[0];
+              dom.Document doc = parser.parse(snapshot.data.body);
+              var img = doc.getElementsByClassName('recipe-header__image')[0];
+              var ingredientsList = doc.getElementById('ingredients')?.getElementsByClassName('ingredients-list-group')[0].getElementsByClassName('ingredients-list-group__card');
+              var cookingStepsList = doc.getElementsByClassName('cooking-steps-main__text');
 
-              var ingrList = document.getElementById('ingredients')?.getElementsByClassName('ingredients-list-group')[0].
-              getElementsByClassName('ingredients-list-group__card');
+              // Must have ingrList.length - 1.
+              // if there exist any ingredient without any given amount the program crashes
+              // the ingredient without any given amount is always at the end of the list
 
-              for (var i = 0; i < ingrList!.length ; i++) {
-                var qty = ingrList[i].getElementsByTagName('span')[0].innerHtml.replaceAll(RegExp('\\s'), "").replaceAll(RegExp("(?<=\\d)(?=\\D)")," ").replaceAll(RegExp("(?<=\\D)(?=\\d)")," ");
-                var ingredient = toBeginningOfSentenceCase(ingrList[i].getElementsByTagName('span')[1].innerHtml.replaceAll(RegExp(r'\n'), "").replaceAll(RegExp(r'  '), ''));
-                qtis.add(qty);
+              for (var i = 0; i < ingredientsList!.length - 1; i++) {
+                var qty = ingredientsList[i].getElementsByTagName('span')[0].innerHtml.replaceAll(RegExp('\\s'), "").replaceAll(RegExp("(?<=\\d)(?=\\D)")," ").replaceAll(RegExp("(?<=\\D)(?=\\d)")," ");
+                var ingredient = toBeginningOfSentenceCase(ingredientsList[i].getElementsByTagName('span')[1].innerHtml.replaceAll(RegExp(r'\n'), "").replaceAll(RegExp(r'  '), ''));
+                quantites.add(qty);
                 ingredients.add(ingredient);
                 addIngredientWidget(ingredient.toString(), qty);
               }
-              print(qtis);
+              for(var i = 0; i < cookingStepsList.length; i++) {
+                var step = cookingStepsList[i].innerHtml;
+                cookingSteps.add(step.toString());
+              }
+              print(quantites);
               print(ingredients);
+              print(cookingSteps);
 
               return SingleChildScrollView(
                 child:  Column(
@@ -124,13 +152,26 @@ class _MealInfoState extends State<MealInfo> {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       child: ListView.builder(
-                        itemCount: _ingredients.length,
+                        itemCount: _ingredientsView.length,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        padding: const EdgeInsets.all(8),
-                        itemBuilder: (BuildContext context, int index){
-                          return _ingredients[index];
+                        itemBuilder: (BuildContext context, int index) {
+                          return _ingredientsView[index];
                         },
+                      ),
+                    ),
+                    Padding(padding: const EdgeInsets.all(10)),
+                    TextCaptionLeft(context, "Cooking steps", Theme.of(context).textTheme.headline4),
+                    Padding(padding: const EdgeInsets.all(5)),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      child: ListView.builder(
+                        itemCount: cookingSteps.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return cookingStepField(context, cookingSteps[index], index);
+                        }
                       ),
                     ),
                     Padding(padding: const EdgeInsets.all(10)),
@@ -174,13 +215,22 @@ class _MealInfoState extends State<MealInfo> {
             child: Column(
               children: [
                 TextCaptionCenter(context, "Enter meal", Theme.of(context).textTheme.headline3),
+                Text("(must be a url)", style: TextStyle(fontSize: 12)),
                 TextFormField(controller: _controller),
                 Padding(padding: EdgeInsets.all(5)),
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
                       url = _controller.text;
-                      hasUrl = true;
+                      if(url.contains(urlMatchIca)) {
+                        hasUrl = true;
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Theme.of(context).errorColor,
+                            content: Text("Invalid url", style: TextStyle(color: Colors.white)),
+                        ));
+                        }
                     });
                   },
                   child: Text("Submit"),
