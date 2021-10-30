@@ -9,7 +9,6 @@ import 'package:html/dom.dart' as dom;
 
 import 'package:meal_planner/models/Database.dart';
 
-
 class MealInfo extends StatefulWidget {
   final String title;
 
@@ -106,19 +105,22 @@ class _MealInfoState extends State<MealInfo> {
           body: Container(
             padding: const EdgeInsets.all(20),
             child: hasUrl == true ? FutureBuilder(
-              future: http.get(Uri.parse(url)),
+              future: Future.wait([http.get(Uri.parse(url)), dbConnection.getMeal("breakfast", 301021)]),
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                  dom.Document doc = parser.parse(snapshot.data.body);
+                  print("hasData: ${snapshot.hasData}");
+                  print("hasError: ${snapshot.hasError}");
+                  dom.Document doc = parser.parse(snapshot.data[0].body);
+                  Map db = snapshot.data[1];
+
                   var recipeImage = doc.getElementsByClassName('recipe-header__image')[0];
                   var ingredientsList = doc.getElementById('ingredients')?.getElementsByClassName('ingredients-list-group')[0].getElementsByClassName('ingredients-list-group__card');
                   var cookingStepsList = doc.getElementsByClassName('cooking-steps-main__text');
-                  var recipeTitle = doc.getElementsByClassName('recipe-header__title')[0];
+                  String recipeTitle = doc.getElementsByClassName('recipe-header__title')[0].text;
 
                   // Must have ingrList.length - 1.
                   // if there exist any ingredient without any given amount the program crashes
                   // the ingredient without any given amount is always at the end of the list
-
                   for (var i = 0; i < ingredientsList!.length - 1; i++) {
                     var qty = ingredientsList[i].getElementsByTagName('span')[0].innerHtml.replaceAll(RegExp('\\s'), "").replaceAll(RegExp("(?<=\\d)(?=\\D)")," ").replaceAll(RegExp("(?<=\\D)(?=\\d)")," ");
                     var ingredient = toBeginningOfSentenceCase(ingredientsList[i].getElementsByTagName('span')[1].innerHtml.replaceAll(RegExp(r'\n'), "").replaceAll(RegExp(r'  '), ''));
@@ -130,12 +132,16 @@ class _MealInfoState extends State<MealInfo> {
                     var step = cookingStepsList[i].innerHtml;
                     cookingSteps.add(step.toString());
                   }
-                  // print(recipeTitle.text);
-                  // print(quantites);
-                  // print(ingredients);
-                  // print(cookingSteps);
 
-                  dbConnection.printMeals();
+                  print("DATABASE");
+                  print(db);
+                  db.forEach((key, val) {
+                    if(key == 'title') {
+                      print("Value: $val");
+                      recipeTitle = val;
+                    }
+                  });
+
 
                   return SingleChildScrollView(
                     child:  Column(
@@ -146,7 +152,7 @@ class _MealInfoState extends State<MealInfo> {
                           children: [
                             Flexible(
                                 flex: 1,
-                                child: TextCaptionLeft(context, recipeTitle.text, Theme.of(context).textTheme.headline3)
+                                child: TextCaptionLeft(context, recipeTitle, Theme.of(context).textTheme.headline3)
                             ),
                             Container(
                                 width: MediaQuery.of(context).size.width / 4,
