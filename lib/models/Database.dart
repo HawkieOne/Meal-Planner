@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 import 'dart:core';
 
@@ -36,10 +37,14 @@ class Database {
     db.close();
   }
 
-  void printMeals() async {
-    var meals = db.collection('meals');
-    await meals.find(where.sortBy('name')).forEach((meal) {
-      print(meal);
+  Future<Map<String, dynamic>> getMeal(String meal, int date) async {
+    var meals = db.collection(meal);
+    Map<String,dynamic> mealInfo = Map();
+    await meals.find(where).forEach((meal) {
+      if(meal['date'] == date) {
+        mealInfo = Map.from(meal);
+      }
     });
+    return mealInfo;
   }
 }
