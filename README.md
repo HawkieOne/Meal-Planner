@@ -8,11 +8,10 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 
-
-
 <!-- PROJECT LOGO -->
 
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
  <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com)  -->
@@ -21,17 +20,14 @@ A mobile app to fetch data from recipes online and convert them to a shopping li
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 ### Built With
 
-* [Flutter](https://flutter.dev/)
+- [Flutter](https://flutter.dev/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 This is an instruction to setting up your project locally.
@@ -59,9 +55,8 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#top">back to top</a>)</p> -->
 
-
-
 <!-- CONTACT -->
+
 ## Contact
 
 Håkan Lindahl - [/hakanlindahl](https://www.linkedin.com/in/h%C3%A5kan-lindahl-3a0427153/) - hakan.l.lindahl@gmail.com
@@ -70,10 +65,9 @@ Project Link: [https://github.com/HawkieOne/Meal-Planner](https://github.com/Haw
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
